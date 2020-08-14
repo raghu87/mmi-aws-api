@@ -36,7 +36,7 @@ node index.js
 ```
 
 ### Prerequisites
-1. At aws IAM add new user & permission to start & stop instance
+1. At AWS >> IAM >> add new user >> give permission to start, stop instance
 2. Get the secret key & access key
 3. copy below commands in terminal
 ``` 
@@ -46,11 +46,9 @@ node index.js
   sudo apt install python-pip
   pip install --user awscli
   which aws
-```
-4) it will ask access key, secret key & region 
-```
   aws configure
 ```
+4. Here it will ask access key, secret key & region 
 
 ### References:
 1. [Install AWS CLI using Python PIP](https://www.youtube.com/watch?v=t4Jo3gjHcAg&list=PL34sAs7_26wMKAl2wcDXb7ko65V8KDBzG&index=4)
