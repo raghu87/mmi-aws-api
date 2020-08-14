@@ -1,1 +1,0 @@
-# mmi-aws-api
