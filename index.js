@@ -6,7 +6,7 @@ function checkAwsStatus (instanceId, region, mode, res, cb) {
     ,DryRun: false
   };
   ec2.describeInstances(params, function(err, data) {
-    console.log(err,data);
+    // console.log(err,data);
     if (err) {
       res['msg'] = "Instance id passed is wrong";
       res['err'] = err;
