@@ -15,7 +15,8 @@ copy below code to start ec2 instance inside `index.js`
 var awsMMIApi = require('mmi-aws-api');
 var instanceId = "blah";
 var region = "blah";
-awsMMIApi.startInstance(instanceId,region,function (response) {
+var debug = false;
+awsMMIApi.startInstance(instanceId,region,debug,function (response) {
   console.log(response);
 });
 ```
@@ -25,7 +26,19 @@ copy below code to stop ec2 instance inside `index.js`
 var awsMMIApi = require('mmi-aws-api');
 var instanceId = "blah";
 var region = "blah";
-awsMMIApi.stopInstance(instanceId,region,function (response) {
+var debug = false;
+awsMMIApi.stopInstance(instanceId,region,debug,function (response) {
+  console.log(response);
+});
+```
+
+copy below code to check status ec2 instance inside `index.js`
+```
+var awsMMIApi = require('mmi-aws-api');
+var instanceId = "blah";
+var region = "blah";
+var debug = false;
+awsMMIApi.instanceStatus(instanceId,region,debug,function (response) {
   console.log(response);
 });
 ```

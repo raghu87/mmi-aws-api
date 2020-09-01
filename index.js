@@ -1,3 +1,5 @@
+var debugLog = false;
+
 function checkAwsStatus (instanceId, region, mode, res, cb) {
   var AWS = require("aws-sdk");
   var ec2 = new AWS.EC2({region:region});
@@ -17,12 +19,12 @@ function checkAwsStatus (instanceId, region, mode, res, cb) {
           if(data.Reservations[0].Instances[0].State) {
             if(data.Reservations[0].Instances[0].State.Name == 'pending' && 
                data.Reservations[0].Instances[0].State.Code == 0) {
-              // console.log('instance pending');              
+              if(debugLog) console.log('instance pending');              
               checkAwsStatus(instanceId, region, mode, res, cb);
             } else if(data.Reservations[0].Instances[0].State.Name == 'running' && 
                       data.Reservations[0].Instances[0].State.Code == 16 &&
                       data.Reservations[0].Instances[0].PublicIpAddress) {            
-              // console.log('instance running');
+              if(debugLog) console.log('instance running');
               if(mode == 'stop') {
                 stopInstanceWrap(ec2, params, res, cb);
               } else {
@@ -33,11 +35,11 @@ function checkAwsStatus (instanceId, region, mode, res, cb) {
               }
             } else if(data.Reservations[0].Instances[0].State.Name == 'stopping' && 
                       data.Reservations[0].Instances[0].State.Code == 64) {
-              // console.log('instance stopping');
+              if(debugLog) console.log('instance stopping');
               checkAwsStatus(instanceId, region, mode, res, cb);
             } else if(data.Reservations[0].Instances[0].State.Name == 'stopped' &&
                       data.Reservations[0].Instances[0].State.Code == 80) {
-              // console.log('instance stopped');
+              if(debugLog) console.log('instance stopped');
               if(mode == 'start') {
                 startInstanceWrap(ec2, params, mode, region, res, cb);
               } else {
@@ -99,7 +101,8 @@ function stopInstanceWrap (ec2, params, res, cb) {
   });
 }
 
-exports.startInstance = function (instanceId, region, cb) {
+exports.startInstance = function (instanceId, region, debug, cb) {
+  debugLog = debug || false;
   var res = { 
     msg:"instanceId is not added"
   };
@@ -110,12 +113,25 @@ exports.startInstance = function (instanceId, region, cb) {
   }  
 }
 
-exports.stopInstance = function (instanceId, region, cb) {
+exports.stopInstance = function (instanceId, region, debug, cb) {
+  debugLog = debug || false;
   var res = { 
     msg:"instanceId is not added"
   };
   if(instanceId && region) {
     checkAwsStatus(instanceId, region, "stop", res, cb);    
+  } else {
+    if(cb) cb(res);
+  }  
+}
+
+exports.instanceStatus = function (instanceId, region, debug, cb) {
+  debugLog = debug || false;
+  var res = { 
+    msg:"instanceId is not added"
+  };
+  if(instanceId && region) {
+    checkAwsStatus(instanceId, region, "check", res, cb);    
   } else {
     if(cb) cb(res);
   }  
