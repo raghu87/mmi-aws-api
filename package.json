@@ -1,6 +1,6 @@
 {
   "name": "mmi-aws-api",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "This will help User to start and stop aws ec2 instance with checking instance existance and whether its switched on or off",
   "main": "index.js",
   "dependencies": {
