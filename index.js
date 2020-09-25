@@ -28,7 +28,7 @@ function checkAwsStatus (instanceId, region, mode, res, cb) {
               if(mode == 'stop') {
                 stopInstanceWrap(ec2, params, res, cb);
               } else {
-                res['id'] = data.Reservations[0].Instances[0].PublicIpAddress;
+                res['ip'] = data.Reservations[0].Instances[0].PublicIpAddress;
                 res['instanceId'] = params.InstanceIds[0];
                 res['msg'] = "Your public ip address "+data.Reservations[0].Instances[0].PublicIpAddress+ " for instance id "+params.InstanceIds[0];
                 if(cb) cb(res);    
